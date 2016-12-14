@@ -105,14 +105,40 @@ MWAS_skylineNMR = function(metabo_SE, MWAS_matrix, ref_sample, alpha_th = 0.05,
 
     # Adjust scale for spectrum
 
-    if (class(ybreaks2) == "waiver" & class(ynames2) == "waiver") {#default values
+    if (class(ybreaks2) == "waiver" & class(ynames2) == "waiver" & is.null(ylim2)) {#default values
         factor = nchar(round(max(metabo_vector), 0)) - 1
           if (factor > 1) {
             metabo_vector = metabo_vector / 10^factor
             ylab2 = paste(ylab2, " (x", 10, "^", factor, ")", sep = "")
             #ylab2 = bquote(~ .(ylab2) ~ '(' ~ '10'^(.factor))
           }
+    }
+
+    if(!is.null(xlim)) {
+        if(ppm[1] < tail(ppm, n = 1)) {
+            indx1 = tail(which(ppm <= min(xlim)), n = 1)
+            indx2 = which(ppm >= max(xlim))[1]
+        } else {
+            indx1 = which(ppm <= min(xlim))[1]
+            indx2 = tail(which(ppm <= max(xlim)), n = 1)
         }
+        if (length(indx1) == 0 | length(indx2) == 0) {
+          stop("xlim is not contained in metabo_SE rownames")
+        }
+
+        if (is.na(indx1) | is.na(indx2)) {
+            stop("xlim is not contained in metabo_SE rownames")
+        }
+        rangeidx = indx1:indx2
+
+        if (is.null(ylim1)) {
+            ylim1 = c(0.90*(min(scores[rangeidx])), 1.10*(max(scores[rangeidx])))
+        }
+        if (is.null(ylim2)) {
+           ylim2 = c(0.90*(min(metabo_vector[rangeidx])),
+                     1.10*(max(metabo_vector[rangeidx])))
+        }
+    }
 
     data_SK = data.frame(ppm = ppm, scores = scores, assoc = assoc, metabo_vector = metabo_vector)
 

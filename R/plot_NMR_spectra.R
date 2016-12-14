@@ -18,10 +18,27 @@ plot_spectraNMR = function(metabo_SE, type = "l", lty = 1,
     if (is.null(xlim)) {
         xlim = rev(range(ppm))
     } else {
-        ind1 = which(ppm >= xlim[2])[1]
-        ind2 = which(ppm >= xlim[1])[1]
+        if(ppm[1] < tail(ppm, n = 1)) {
+            ind1 = tail(which(ppm <= min(xlim)), n = 1)
+            ind2 = which(ppm >= max(xlim))[1]
+        } else {
+            ind1 = which(ppm <= min(xlim))[1]
+            ind2 = tail(which(ppm <= max(xlim)), n = 1)
+        }
+        if (length(ind1) == 0  | length(ind2) == 0) {
+            stop("xlim is not contained in metabo_SE rownames")
+        }
+        if (is.na(ind1) | is.na(ind2)) {
+            stop("xlim is not contained in metabo_SE rownames")
+        }
         ppm = ppm[ind1:ind2]
         metabo_matrix = metabo_matrix[ind1:ind2, ]
+
+        if (is.null(ylim)) {
+          ylim = c(0.90*(min(metabo_matrix)),
+                   1.10*(max(metabo_matrix)))
+
+        }
     }
 
     matplot(ppm, metabo_matrix, type = type, xlim = xlim, xlab = xlab,

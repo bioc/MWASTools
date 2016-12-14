@@ -12,7 +12,7 @@ MWAS_bootstrapping (metabo_SE, metabolite_id, disease_id, confounder_ids = NULL,
 }
 \arguments{
   \item{metabo_SE}{SummarizedExperiment object generated using the function
-  "MWAS_SummarizedExperiment()".}
+  MWAS_SummarizedExperiment().}
   \item{metabolite_id}{character vector corresponding to the id of the metabolite
   to be modeled.}
   \item{disease_id}{character vector corresponding to the id of the response

@@ -14,7 +14,7 @@ QC_CV (metabo_SE, CV_th = 0.30, plot_hist = TRUE, hist_bw = 0.005,
 }
 \arguments{
   \item{metabo_SE}{SummarizedExperiment object generated using the function
-  "MWAS_SummarizedExperiment()".}
+  MWAS_SummarizedExperiment().}
   \item{CV_th}{numeric value indicating the CV threshold.}
   \item{plot_hist}{logical constant indicating whether a histogram showing CV
   distribution will be plotted.}

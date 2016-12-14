@@ -67,6 +67,24 @@ STOCSY_NMR = function(metabo_SE, ppm_query, alpha_th = 0.05,
                                  SIMPLIFY = FALSE)
     abs.r = abs(unlist(cor_metabo_adjusted))
 
+    if(!is.null(xlim) & is.null(ylim)) {
+        if(ppm[1] < tail(ppm, n = 1)) {
+            ind1 = tail(which(ppm <= min(xlim)), n = 1)
+            ind2 = which(ppm >= max(xlim))[1]
+        } else {
+            ind1 = which(ppm <= min(xlim))[1]
+            ind2 = tail(which(ppm <= max(xlim)), n = 1)
+        }
+        if (length(ind1) == 0 | length(ind2) == 0) {
+          stop("xlim is not contained in metabo_SE rownames")
+        }
+        if (is.na(ind1) | is.na(ind2)) {
+        stop("xlim is not contained in metabo_SE rownames")
+      }
+        ylim = c(0.90*(min(covar[ind1:ind2])),
+                 1.10*(max(covar[ind1:ind2])))
+    }
+
     data_cov = data.frame(ppm = ppm, covar = covar, abs.r = abs.r)
 
     col_scale = c("red4", "red", "orangered", "darkorange4", "darkolivegreen",

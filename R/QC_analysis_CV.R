@@ -91,8 +91,16 @@ QC_CV_specNMR = function(metabo_SE, ref_sample, CV_th = 0.3,
     xlim = suppressWarnings(sort(xlim, decreasing = TRUE))
 
     if(!is.null(xlim)) {
-        ind1 = which(ppm >= xlim[1]) [1]
-        ind2 = which(ppm >= xlim[2])[1]
+        if(ppm[1] < tail(ppm, n = 1)) {
+            ind1 = tail(which(ppm <= min(xlim)), n = 1)
+            ind2 = which(ppm >= max(xlim))[1]
+        } else {
+            ind1 = which(ppm <= min(xlim))[1]
+            ind2 = tail(which(ppm <= max(xlim)), n = 1)
+        }
+        if (length(ind1) == 0 | length(ind2) == 0) {
+            stop("xlim is not contained in metabo_SE rownames")
+        }
         if (is.na(ind1) | is.na(ind2)) {
             stop("xlim is not contained in metabo_SE rownames")
         }
@@ -106,6 +114,11 @@ QC_CV_specNMR = function(metabo_SE, ref_sample, CV_th = 0.3,
         stop ("ref_sample is not included in metabo_SE colnames")
     } else {
         metabo_vector = metabo_matrix[ref_sample, ]
+    }
+
+    if (is.null(ylim) & !is.null(xlim)) {
+        ylim = c(0.90*(min(metabo_vector[ind_range])),
+                 1.10*(max(metabo_vector[ind_range])))
     }
 
     ## Calculate CV_metabo

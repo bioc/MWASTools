@@ -13,7 +13,7 @@ QC_CV_specNMR (metabo_SE, ref_sample,  CV_th = 0.30, xlab = "ppm",
 }
 \arguments{
   \item{metabo_SE}{SummarizedExperiment object generated using the function
-  "MWAS_SummarizedExperiment()".}
+  MWAS_SummarizedExperiment().}
   \item{ref_sample}{character vector indicating the id of the sample that will
   be used to plot the NMR spectrum.}
   \item{CV_th}{numeric value indicating the CV threshold. NMR signals with CV equal or
@@ -46,6 +46,7 @@ data(metabo_SE)
 
 ## Plot NMR spectrum colored by CV
 QC_CV_specNMR (metabo_SE, ref_sample = "QC1", CV_th = 0.30)
+QC_CV_specNMR (metabo_SE, ref_sample = "QC1", CV_th = 0.30, xlim = c(1.1, 0.95))
 QC_CV_specNMR (metabo_SE, ref_sample = "QC1", CV_th = 0.15)
 
 }
