@@ -10,8 +10,7 @@ function "QC_CV()".
 CV_filter(metabo_SE, CV_metabo, CV_th = 0.30)
 }
 \arguments{
-  \item{metabo_SE}{SummarizedExperiment object generated using the function
-  MWAS_SummarizedExperiment().}
+  \item{metabo_SE}{SummarizedExperiment object. See "MWAS_SummarizedExperiment()".}
   \item{CV_metabo}{numeric vector containing the CVs of the metabolic variables.
   See function "QC_CV()".}
   \item{CV_th}{numeric value indicating the CV threshold. Only features with CV below

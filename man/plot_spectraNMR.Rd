@@ -10,8 +10,7 @@ plot_spectraNMR (metabo_SE, type = "l", lty = 1, xlab ="ppm",
                  ylab ="intensity", xlim = NULL, ...)
 }
 \arguments{
-  \item{metabo_SE}{SummarizedExperiment object generated using the function
-  MWAS_SummarizedExperiment().}
+  \item{metabo_SE}{SummarizedExperiment object. See "MWAS_SummarizedExperiment()".}
   \item{type}{character vector indicating the type of plot for each row of metabo_matrix.
   For all possible types, see "plot()".}
   \item{lty}{character vector of line types. For all possible types, see "plot()".}

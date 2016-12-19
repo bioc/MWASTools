@@ -19,8 +19,7 @@ MWAS_skylineNMR (metabo_SE, MWAS_matrix, ref_sample, alpha_th = 0.05, output = "
                  ynames1 = waiver(), ynames2 = waiver())
 }
 \arguments{
-  \item{metabo_SE}{SummarizedExperiment object generated using the function
-  MWAS_SummarizedExperiment().}
+  \item{metabo_SE}{SummarizedExperiment object. See "MWAS_SummarizedExperiment()".}
   \item{MWAS_matrix}{numeric matrix resulting from the function "MWAS_stats()".}
   \item{ref_sample}{character vector indicating the id of the sample that will
   be used to plot the NMR spectrum.}

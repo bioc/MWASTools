@@ -4,15 +4,14 @@
 \description{
 This function generates bootstrap replicates (non-parametric resampling) of a model
 testing for association between a given metabolite and a disease phenotype,
-and calculates the confidence intervals of model coefficients.
+and calculates the confidence interval of model coefficients.
 }
 \usage{
 MWAS_bootstrapping (metabo_SE, metabolite_id, disease_id, confounder_ids = NULL,
                     assoc_method, iterations = 10000)
 }
 \arguments{
-  \item{metabo_SE}{SummarizedExperiment object generated using the function
-  MWAS_SummarizedExperiment().}
+  \item{metabo_SE}{SummarizedExperiment object. See "MWAS_SummarizedExperiment()".}
   \item{metabolite_id}{character vector corresponding to the id of the metabolite
   to be modeled.}
   \item{disease_id}{character vector corresponding to the id of the response

@@ -14,8 +14,7 @@ STOCSY_NMR (metabo_SE, ppm_query, alpha_th = 0.05, xlab = "ppm", ylab = "covaria
             xnames = waiver(), ynames = waiver(), ybreaks = waiver())
 }
 \arguments{
-  \item{metabo_SE}{SummarizedExperiment object generated using the function
-  MWAS_SummarizedExperiment().}
+  \item{metabo_SE}{SummarizedExperiment object. See "MWAS_SummarizedExperiment()".}
   \item{ppm_query}{numeric value (at least 2 decimals) corresponding to the driver ppm.}
   \item{alpha_th}{numeric value indicating the significance threshold. NMR variables
   with BH-adjusted p-value above this threshold will be neglected.}

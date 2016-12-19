@@ -12,8 +12,7 @@ QC_CV_specNMR (metabo_SE, ref_sample,  CV_th = 0.30, xlab = "ppm",
                ybreaks = waiver (), ynames = waiver ())
 }
 \arguments{
-  \item{metabo_SE}{SummarizedExperiment object generated using the function
-  MWAS_SummarizedExperiment().}
+  \item{metabo_SE}{SummarizedExperiment object. See "MWAS_SummarizedExperiment()".}
   \item{ref_sample}{character vector indicating the id of the sample that will
   be used to plot the NMR spectrum.}
   \item{CV_th}{numeric value indicating the CV threshold. NMR signals with CV equal or

@@ -9,8 +9,7 @@ MWAS_stats (metabo_SE, disease_id, confounder_ids = NULL, assoc_method, mt_metho
             output = "pvalues", CV_metabo = NULL)
 }
 \arguments{
-  \item{metabo_SE}{SummarizedExperiment object generated using the function
-  MWAS_SummarizedExperiment().}
+  \item{metabo_SE}{SummarizedExperiment object. See "MWAS_SummarizedExperiment()".}
   \item{disease_id}{character vector corresponding to the id of the response to be
   modeled.}
   \item{confounder_ids}{optional character vector corresponding to the ids of the

@@ -9,8 +9,7 @@ an object of class "prcomp". When quality control (QC) samples are available,
 QC_PCA (metabo_SE, scale = FALSE, center = TRUE,...)
 }
 \arguments{
-  \item{metabo_SE}{SummarizedExperiment object generated using the function
-  MWAS_SummarizedExperiment().}
+  \item{metabo_SE}{SummarizedExperiment object. See "MWAS_SummarizedExperiment()".}
   \item{scale}{logical constant indicating whether the metabolic variables will be
   scaled to have unit variance before the analysis. For more details, check "prcomp()".}
   \item{center}{logical constant indicating whether the metabolic variables will be

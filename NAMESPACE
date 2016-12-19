@@ -27,3 +27,4 @@ importFrom('stats', 'binomial', 'cor', 'cor.test', 'cov', 'glm', 'lm',
              'na.omit', 'p.adjust', 'prcomp', 'sd')
 importFrom('utils', 'write.table')
 importFrom('utils', 'head')
+importFrom('utils', 'tail')
