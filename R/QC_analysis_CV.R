@@ -117,8 +117,13 @@ QC_CV_specNMR = function(metabo_SE, ref_sample, CV_th = 0.3,
     }
 
     if (is.null(ylim) & !is.null(xlim)) {
-        ylim = c(0.90*(min(metabo_vector[ind_range])),
-                 1.10*(max(metabo_vector[ind_range])))
+        if (min(metabo_vector) > 0) {
+            ylim = c(0.90*(min(metabo_vector)),
+                     1.10*(max(metabo_vector)))
+        } else {
+            ylim = c(1.15*(min(metabo_vector)),
+                     1.10*(max(metabo_vector)))
+      }
     }
 
     ## Calculate CV_metabo

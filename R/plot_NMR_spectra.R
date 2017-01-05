@@ -35,8 +35,13 @@ plot_spectraNMR = function(metabo_SE, type = "l", lty = 1,
         metabo_matrix = metabo_matrix[ind1:ind2, ]
 
         if (is.null(ylim)) {
-          ylim = c(0.90*(min(metabo_matrix)),
-                   1.10*(max(metabo_matrix)))
+          if (min(metabo_matrix) > 0 ) {
+              ylim = c(0.90*(min(metabo_matrix)),
+                       1.10*(max(metabo_matrix)))
+          } else {
+              ylim = c(1.15*(min(metabo_matrix)),
+                       1.10*(max(metabo_matrix)))
+          }
 
         }
     }

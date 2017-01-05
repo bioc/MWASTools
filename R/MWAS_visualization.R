@@ -132,11 +132,22 @@ MWAS_skylineNMR = function(metabo_SE, MWAS_matrix, ref_sample, alpha_th = 0.05,
         rangeidx = indx1:indx2
 
         if (is.null(ylim1)) {
-            ylim1 = c(0.90*(min(scores[rangeidx])), 1.10*(max(scores[rangeidx])))
+            if(min(scores[rangeidx]) > 0) {
+                ylim1 = c(0.90*(min(scores[rangeidx])),
+                          1.10*(max(scores[rangeidx])))
+            } else {
+                ylim1 = c(1.15*(min(scores[rangeidx])),
+                          1.10*(max(scores[rangeidx])))
+            }
         }
         if (is.null(ylim2)) {
-           ylim2 = c(0.90*(min(metabo_vector[rangeidx])),
-                     1.10*(max(metabo_vector[rangeidx])))
+            if (min(metabo_vector[rangeidx]) > 0) {
+                ylim2 = c(0.90*(min(metabo_vector[rangeidx])),
+                          1.10*(max(metabo_vector[rangeidx])))
+            } else {
+                ylim2 = c(1.15*(min(metabo_vector[rangeidx])),
+                          1.10*(max(metabo_vector[rangeidx])))
+            }
         }
     }
 
