@@ -28,3 +28,4 @@ importFrom('stats', 'binomial', 'cor', 'cor.test', 'cov', 'glm', 'lm',
 importFrom('utils', 'write.table')
 importFrom('utils', 'head')
 importFrom('utils', 'tail')
+importFrom("graphics", "points")

@@ -235,18 +235,30 @@ MWAS_filter = function(MWAS_matrix, type = "pvalue", alpha_th = 0.05,
     index_all = unique(c(index_CV, index_pval))
 
     if (type == "all") {
+        if (length(index_all) == 0) {
+            message ("All features satisfy the filtering parameters")
+            return(MWAS_matrix)
+        }
         if (length(index_all) == nrow(MWAS_matrix)) {
             stop("None of the metabolic features satisfies the filtering parameters")
         } else {
             MWAS_matrix = MWAS_matrix[-index_all, ]
         }
     } else if (type == "CV") {
+        if (length(index_CV) == 0) {
+            message ("All features satisfy the filtering parameters")
+            return(MWAS_matrix)
+        }
         if (length(index_CV) == nrow(MWAS_matrix)) {
             stop("None of the metabolic features satisfies the filtering parameters")
         } else {
             MWAS_matrix = MWAS_matrix[-index_CV, ]
         }
     } else {
+        if (length(index_pval) == 0 ) {
+            message ("All features satisfy the filtering parameters")
+            return(MWAS_matrix)
+        }
         if (length(index_pval) == nrow(MWAS_matrix)) {
             stop("None of the metabolic features satisfies the filtering parameters")
         } else {

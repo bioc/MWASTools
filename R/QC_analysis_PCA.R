@@ -100,9 +100,17 @@ QC_PCA_scoreplot = function(PCA_model, metabo_SE, plot_labels = FALSE,
         bg = color_vector
         plot(PC_x, PC_y, pch = pch, bg = color_vector, xlab = xlab, ylab = ylab,
              xlim = xlim, ylim = ylim, ...)
+        if (1 %in% class) {
+            points(PC_x[class == 1], PC_y [class == 1], pch = pch,
+                   bg = color_scale[2])
+        }
     } else {
         plot(PC_x, PC_y, pch = pch, col = color_vector, xlab = xlab, ylab = ylab,
              xlim = xlim, ylim = ylim, ...)
+        if (1 %in% class) {
+            points(PC_x[class == 1], PC_y [class == 1], col = color_scale[2],
+                   pch = pch)
+        }
     }
 
     ## remove QC to calculate ellipse
