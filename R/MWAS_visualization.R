@@ -273,7 +273,16 @@ MWAS_barplot = function(MWAS_matrix, alpha_th = 0.05, width = NULL, scale_color
         theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
               axis.text = element_text(size = size_yaxis),
               axis.text.x = element_text(angle = angle_names, hjust = 1, size = size_names),
-              axis.title = element_text(size = size_ylab, vjust = 0 ))
+              axis.title = element_text(size = size_ylab, vjust = 0 )) +
+       {
+          if ("downregulated" %in% assoc) geom_hline(yintercept = +log10(alpha_th),
+                                       col = scale_color[2],
+                                       linetype="dashed")
+       } + {
+          if ("upregulated" %in% assoc) geom_hline(yintercept = -log10(alpha_th),
+                                       col = scale_color[3],
+                                       linetype="dashed")
+       }
     plot(figure_barplot)
     return(figure_barplot)
 }
