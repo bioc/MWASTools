@@ -76,6 +76,7 @@ MWAS_skylineNMR = function(metabo_SE, MWAS_matrix, ref_sample, alpha_th = 0.05,
     if (sum(is.na(MWAS_matrix))) {
         stop ("NA values in MWAS_matrix are not allowed")
     }
+
     estimates = MWAS_matrix[,1]
     pvalues = MWAS_matrix[,3]
 
@@ -286,3 +287,69 @@ MWAS_barplot = function(MWAS_matrix, alpha_th = 0.05, width = NULL, scale_color
     plot(figure_barplot)
     return(figure_barplot)
 }
+
+### MWAS_scatterplotMS ####
+MWAS_scatterplotMS = function(rt, mz, MWAS_matrix, alpha_th = 0.05, xlab = "rt",
+                              ylab = "mz", pch = 20, scale_color = c("cornflowerblue", "red"),
+                              xlim = NULL, ylim = NULL, size_axis = 10, size_lab = 10,
+                              legend_position = "bottom") {
+
+    ## Check if input variables are correct
+    if (is.vector(rt) == FALSE | is.numeric(rt) == FALSE) {
+        stop ("rt must be a numeric vector")
+    }
+
+    if (is.vector(mz) == FALSE | is.numeric(mz) == FALSE) {
+        stop ("mz must be a numeric vector")
+    }
+
+    if (is.matrix(MWAS_matrix) == FALSE | is.numeric(MWAS_matrix) == FALSE) {
+        stop ("MWAS_matrix must be a numeric matrix")
+    }
+
+    if(ncol(MWAS_matrix) < 3) {
+        stop ("MWAS_matrix seems to have an incorrect format")
+    }
+
+    if (length(mz) != length(rt) | length(rt) != nrow(MWAS_matrix)) {
+        stop("dimensions MWAS_matrix, rt and mz must be consistent")
+    }
+
+    if (sum(is.na(MWAS_matrix))) {
+        stop ("NA values in MWAS_matrix are not allowed")
+    }
+
+    if (length(scale_color) != 2) {
+        stop("scale_color must have 2 color values")
+    }
+
+    MWAS_matrix_filtered = MWAS_filter(MWAS_matrix[, 1:3], alpha_th = alpha_th)
+    MWAS_matrix_filtered = matrix(MWAS_matrix_filtered, ncol = 4)
+    ind = MWAS_matrix_filtered[, 4]
+    rt_filtered = rt[ind]
+    mz_filtered = mz[ind]
+    estimates_filtered = MWAS_matrix_filtered[, 1]
+    scores_filtered = abs(log10(MWAS_matrix_filtered[, 3]))
+
+    assoc = estimates_filtered
+    assoc[estimates_filtered < 0] = "downregulated"
+    assoc[estimates_filtered > 0] = "upregulated"
+
+    scoresM = data.frame(rt = rt_filtered, mz = mz_filtered,
+                         assoc = assoc, logpval = scores_filtered)
+
+    figure = ggplot (scoresM, aes(rt, mz, color = assoc, size = logpval)) +
+        geom_point(shape = pch) +
+        scale_colour_manual(values = c(scale_color[1], scale_color[2])) +
+        theme_bw() +
+        labs(x = xlab, y = ylab) +
+        scale_x_continuous(limits = xlim) +
+        scale_y_continuous(limits = ylim) +
+        theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+              axis.text = element_text(size = size_axis),
+              axis.title = element_text(size = size_lab, vjust = 0),
+              legend.position = legend_position)
+
+    return(figure)
+}
+

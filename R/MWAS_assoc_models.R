@@ -209,7 +209,7 @@ MWAS_stats = function(metabo_SE, disease_id, confounder_ids = NULL,
 ### MWAS_filter ####
 
 MWAS_filter = function(MWAS_matrix, type = "pvalue", alpha_th = 0.05,
-                       CV_th = 0.3) {
+                       CV_th = 0.3, sort = FALSE) {
 
     ## Check that input data are correct
     if (!is.matrix(MWAS_matrix) | !is.numeric(MWAS_matrix)) {
@@ -264,6 +264,10 @@ MWAS_filter = function(MWAS_matrix, type = "pvalue", alpha_th = 0.05,
         } else {
             MWAS_matrix = MWAS_matrix[-index_pval, ]
         }
+    }
+
+    if (sort) {
+        MWAS_matrix = MWAS_matrix[order(MWAS_matrix[, 3], decreasing = FALSE), ]
     }
     return(MWAS_matrix)
 }

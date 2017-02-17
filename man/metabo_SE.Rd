@@ -17,3 +17,4 @@
 }
 \usage{data(metabo_SE)}
 \value{SummarizedExperiment}
+
