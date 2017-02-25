@@ -43,6 +43,7 @@ data(targetMetabo_SE)
 
 ## Test for association between diabetes and target_metabolites
 T2D_model <- MWAS_stats (targetMetabo_SE, disease_id = "T2D",
+                         confounder_ids = c("Age", "Gender", "BMI"),
                          assoc_method = "logistic")
 
 ## Build correlation-based metabolic network
