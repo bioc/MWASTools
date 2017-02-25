@@ -257,6 +257,11 @@ MWAS_filter = function(MWAS_matrix, type = "pvalue", alpha_th = 0.05,
     } else {
         if (length(index_pval) == 0 ) {
             message ("All features satisfy the filtering parameters")
+
+            if (sort == TRUE & is.matrix(MWAS_matrix) == TRUE) {
+                MWAS_matrix = MWAS_matrix[order(MWAS_matrix[, 3], decreasing = FALSE), ]
+            }
+
             return(MWAS_matrix)
         }
         if (length(index_pval) == nrow(MWAS_matrix)) {
@@ -266,7 +271,7 @@ MWAS_filter = function(MWAS_matrix, type = "pvalue", alpha_th = 0.05,
         }
     }
 
-    if (sort) {
+    if (sort == TRUE & is.matrix(MWAS_matrix) == TRUE) {
         MWAS_matrix = MWAS_matrix[order(MWAS_matrix[, 3], decreasing = FALSE), ]
     }
     return(MWAS_matrix)

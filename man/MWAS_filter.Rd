@@ -34,10 +34,10 @@ T2D_model <- MWAS_stats (targetMetabo_SE, disease_id = "T2D",
                          assoc_method = "logistic")
 
 ## Filter T2D_model by p-value
-pvalue_filter <- MWAS_filter(T2D_model, type = "pvalue", alpha_th = 0.001)
 MWAS_filter(T2D_model, type = "pvalue", alpha_th = 0.001, sort = TRUE)
 
 ## Subset targetMetabo_SE based on pvalue_filter
+pvalue_filter <- MWAS_filter(T2D_model, type = "pvalue", alpha_th = 0.001)
 index_features <- pvalue_filter[, 4]
 targetMetabo_SE[index_features, ]
 }
