@@ -10,9 +10,9 @@ MWAS_stats (metabo_SE, disease_id, confounder_ids = NULL, assoc_method, mt_metho
 }
 \arguments{
   \item{metabo_SE}{SummarizedExperiment object. See "MWAS_SummarizedExperiment()".}
-  \item{disease_id}{character vector corresponding to the id of the response to be
+  \item{disease_id}{character vector corresponding to the ID of the response to be
   modeled.}
-  \item{confounder_ids}{optional character vector corresponding to the ids of the
+  \item{confounder_ids}{optional character vector corresponding to the IDs of the
   covariates to be included in the model (e.g. age or gender).}
   \item{assoc_method}{character constant indicating the association method that
   will be used. Possible values for assoc_method are: "pearson" (Pearson correlation),

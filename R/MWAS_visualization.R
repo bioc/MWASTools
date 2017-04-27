@@ -36,6 +36,14 @@ sig_color = function(score, alpha_th = alpha_th) {
     return(color)
 }
 
+### compute_score #### used for the heatmap
+compute_score = function(MWAS_matrix) {
+    estimate = MWAS_matrix[, 1]
+    estimate[estimate > 0] = 1
+    estimate[estimate < 0] = -1
+    return(-log10(MWAS_matrix[, 3])*estimate)
+}
+
 
 ## EXTERNAL FUNCTIONS ##
 
@@ -152,7 +160,8 @@ MWAS_skylineNMR = function(metabo_SE, MWAS_matrix, ref_sample, alpha_th = 0.05,
         }
     }
 
-    data_SK = data.frame(ppm = ppm, scores = scores, assoc = assoc, metabo_vector = metabo_vector)
+    data_SK = data.frame(ppm = ppm, scores = scores, assoc = assoc,
+                         metabo_vector = metabo_vector)
 
     # Do plots
 
@@ -200,7 +209,8 @@ MWAS_skylineNMR = function(metabo_SE, MWAS_matrix, ref_sample, alpha_th = 0.05,
     }  else {
       figure_SK_gtable = ggplot_gtable(ggplot_build(figure_SK))
       figure_spectrum_gtable = ggplot_gtable(ggplot_build(figure_spectrum))
-      maxWidth = unit.pmax(figure_SK_gtable$widths[2:3], figure_spectrum_gtable$widths[2:3])
+      maxWidth = unit.pmax(figure_SK_gtable$widths[2:3],
+                           figure_spectrum_gtable$widths[2:3])
 
       figure_SK_gtable$widths[2:3] = maxWidth
       figure_spectrum_gtable$widths[2:3] = maxWidth
@@ -242,7 +252,8 @@ MWAS_barplot = function(MWAS_matrix, alpha_th = 0.05, width = NULL, scale_color
     ## Get scores and color scale
     scores = unlist(mapply(SK_scores, pvalues, estimates, SIMPLIFY = FALSE))
     names(scores) = metabo_ids
-    scores_col = sapply(scores, SK_color, scale_color = scale_color, alpha_th = alpha_th)
+    scores_col = sapply(scores, SK_color, scale_color = scale_color,
+                        alpha_th = alpha_th)
 
     col_ref = scores_col
     col_ref[col_ref == scale_color[1]] = legend_labs[1]
@@ -253,7 +264,8 @@ MWAS_barplot = function(MWAS_matrix, alpha_th = 0.05, width = NULL, scale_color
     names(scores_col_values) = unique(col_ref)
     assoc = factor(col_ref)
 
-    scoresM = data.frame(assoc = assoc, metabo_ids = factor(metabo_ids), scores = scores)
+    scoresM = data.frame(assoc = assoc, metabo_ids = factor(metabo_ids),
+                         scores = scores)
 
     ## Set positions
     if(sort == TRUE){
@@ -353,3 +365,60 @@ MWAS_scatterplotMS = function(rt, mz, MWAS_matrix, alpha_th = 0.05, xlab = "rt",
     return(figure)
 }
 
+### MWAS_heatmap ####
+MWAS_heatmap = function (metabo_SE, MWAS_list, alpha_th = 0.05, ncut = 3, ...) {
+
+    ## Check that input data are correct
+    if(!is.list(MWAS_list)) {
+        stop("MWAS_list must be a list")
+    }
+    if( FALSE %in% sapply(MWAS_list, is.matrix)) {
+        stop("All the elements from MWAS_list must be matrices from MWAS_stats()")
+    }
+    if(is.null(names(MWAS_list))) {
+        stop("MWAS_list names are missing")
+    }
+    if(nrow(metabo_SE) != nrow(MWAS_list[[1]])) {
+        stop("metabo_SE and MWAS_list dimensions are not consistent")
+    }
+
+    ## Get score_matrix
+    score_matrix = do.call(cbind, lapply(MWAS_list, compute_score))
+    non_sign_index = which(abs(score_matrix) < -log10(alpha_th))
+    score_matrix[non_sign_index] = 0
+    colnames(score_matrix) = names(MWAS_list)
+
+    ## Get correlation_matrix
+    metabolic_data = t(assays(metabo_SE)$metabolic_data)
+
+    ## Clustering and generation of row dendrogram
+    hr <<- hclust(as.dist(1-cor(metabolic_data, method="pearson")),
+                  method="complete")
+    ncut  <<- ncut[1] # in case the user puts 2 values
+
+    ## Generate heatmap
+    set.seed(23051991)
+    draw(Heatmap(score_matrix, cluster_rows = hr, cluster_columns = FALSE,
+                 name = "MWAS_score", row_dend_reorder = TRUE, ...))
+    decorate_row_dend("MWAS_score", {
+        find_first_index = function(number, all_numbers) {
+            return(which(all_numbers == number)[1] - 1)
+        }
+        find_last_index = function(number, all_numbers) {
+            ind = which(all_numbers == number)
+            return(ind[1]+(length(ind)-1))
+        }
+        ind = cutree(hr, h = max(hr$height/ncut))[order.dendrogram(as.dendrogram(hr))]
+        #ind = cutree(hr, k = 2)[order.dendrogram(as.dendrogram(hr))]
+        y1 = sapply(unique(ind), find_first_index, rev(ind))
+        y2 = sapply(unique(ind), find_last_index, rev(ind))
+        grid.rect(y = y1/length(ind), height = (y2 - y1)/length(ind),
+                  just = "bottom",default.units = "npc",
+                   gp = gpar(fill = c(rainbow(length(y1),alpha = 0.5)), col = NA))
+    })
+    ind = cutree(hr, h = max(hr$height/ncut))[order.dendrogram(as.dendrogram(hr))]
+    cluster_matrix = cbind(names(ind), ind)
+    colnames(cluster_matrix) = c("metabolite", "cluster")
+    rownames(cluster_matrix) = NULL
+    return(cluster_matrix)
+}

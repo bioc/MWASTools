@@ -52,7 +52,7 @@ remove_isolatedV = function(metabolite, all_metabolites) {
 ##### MWAS_network ###
 
 MWAS_network = function(metabo_SE, MWAS_matrix, alpha_th = 0.05,
-    cor_th = 0.25, file_name = "MWAS", res_cor = 2) {
+    cor_th = 0.25, file_name = "Correlation", res_cor = 2) {
 
     ## Check that input data are correct
     if (class(metabo_SE)[1] != "SummarizedExperiment") {
@@ -145,15 +145,15 @@ MWAS_network = function(metabo_SE, MWAS_matrix, alpha_th = 0.05,
     V(igNet)$color = attributes_col
     V(igNet)$score = attributes_score
 
-    file_nameN = paste(file_name, "Attribute.txt", sep = "")
+    file_nameN = paste(file_name, "AttributeFile.txt", sep = "_")
     write.table(attributes_met, file_nameN, row.names = FALSE,
-        sep = "\t", quote = FALSE, col.names = FALSE)
+        sep = "\t", quote = FALSE, col.names = TRUE)
 
     ## Export network to cytoscape
     cytoscape_net = as.data.frame(cor_network, rownames = NULL)
-    file_nameN = paste(file_name, "Network.txt", sep = "")
+    file_nameN = paste(file_name, "NetworkFile.txt", sep = "_")
     write.table(cytoscape_net, file_nameN, row.names = FALSE,
-        sep = "\t", quote = FALSE, col.names = FALSE)
+        sep = "\t", quote = FALSE, col.names = TRUE)
 
     return(igNet)
 }

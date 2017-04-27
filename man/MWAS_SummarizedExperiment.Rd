@@ -12,12 +12,12 @@ MWAS_SummarizedExperiment(metabo_matrix, clinical_matrix, sample_type)
   \item{metabo_matrix}{numeric matrix containing the metabolic data (e.g. NMR peak
   intensities or metabolite concentrations). The columns of the matrix must correspond
   to the metabolic variables and the rows to the samples. Column and row names must
-  contain the metabolite ids (e.g. chemical shifts for NMR data) and the sample ids,
+  contain the metabolite IDs (e.g. chemical shifts for NMR data) and the sample IDs,
   respectively.}
   \item{clinical_matrix}{numeric matrix containing the clinical data (e.g. age, gender).
   The columns of the matrix must correspond to the phenotypic variables and the
-  rows to the samples. Column and row names must contain the phenotype ids and
-  the sample ids, respectively. For samples without clinical data (e.g. quality
+  rows to the samples. Column and row names must contain the phenotype IDs and
+  the sample IDs, respectively. For samples without clinical data (e.g. quality
   control (QC) samples), NA values must be used. }
   \item{sample_type}{numeric vector indicating sample type (i.e. experimental sample
   or QC sample). The vector must be coded as follows: experimental sample = 0,

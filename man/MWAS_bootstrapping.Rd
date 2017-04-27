@@ -39,7 +39,8 @@ University Press.
 data(targetMetabo_SE)
 
 ## Bootstrap model testing for association between diabetes (T2D) and 3OH-butyrate
-MWAS_bootstrapping (targetMetabo_SE, metabolite_id = "3OH-butyrate", disease_id = "T2D",
-                    assoc_method = "logistic", iterations = 1000)
+MWAS_bootstrapping (targetMetabo_SE, metabolite_id = "3-Hydroxybutyrate",
+                    disease_id = "T2D",assoc_method = "logistic",
+                    iterations = 1000)
 }
 

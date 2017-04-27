@@ -7,7 +7,7 @@
   This SummarizedExperiment object contains the following information:
 
   -An assay matrix containing the levels of 8 targeted 1H NMR metabolites (lactate,
-  3-hydroxybutyrate, leucine, valine, isoleucine,acetate, alanine and 1,5-anhydroglucitol)
+  3-hydroxybutyrate, leucine, valine, isoleucine, acetate, alanine and 1,5-anhydroglucitol)
   across the experimental samples and the quality control (QC) samples.
 
   -A data.frame containing clinical information (age, gender, type II diabetes status and BMI)

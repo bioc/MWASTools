@@ -21,7 +21,7 @@ MWAS_skylineNMR (metabo_SE, MWAS_matrix, ref_sample, alpha_th = 0.05, output = "
 \arguments{
   \item{metabo_SE}{SummarizedExperiment object. See "MWAS_SummarizedExperiment()".}
   \item{MWAS_matrix}{numeric matrix resulting from the function "MWAS_stats()".}
-  \item{ref_sample}{character vector indicating the id of the sample that will
+  \item{ref_sample}{character vector indicating the ID of the sample that will
   be used to plot the NMR spectrum.}
   \item{alpha_th}{numeric value indicating the significance threshold.}
   \item{output}{character constant indicating the outcome of the function ("skyline",

@@ -9,7 +9,7 @@ parameters (e.g. color, size) can be customized based on MWAS results.
 }
 \usage{
 MWAS_network (metabo_SE, MWAS_matrix, alpha_th = 0.05, cor_th = 0.25,
-              file_name = "MWAS", res_cor = 2)
+              file_name = "Correlation", res_cor = 2)
 }
 \arguments{
   \item{metabo_SE}{SummarizedExperiment object. See "MWAS_SummarizedExperiment()".}
@@ -24,7 +24,7 @@ MWAS_network (metabo_SE, MWAS_matrix, alpha_th = 0.05, cor_th = 0.25,
   of coefficients used to build the edges of the network.}
 }
 \references{
-Csardi, G. & Nepusz, T. (2006). The igraph software package for complex network
+Csardi G, Nepusz T. (2006). The igraph software package for complex network
 research. InterJournal, Complex Systems, 1695.
 }
 \value{
@@ -34,8 +34,9 @@ containing the MWAS score (-log10(pvalue)*estimate sign) of each metabolite. "co
 is a vector indicating the color of each node based on MWAS results ("cornflowerblue":
 "downregulation", "gray":"no change", "firebrick1":"upregulation"). These attributes
 can be used to customize node parameters based on MWAS results. The function also
-exports a network file ("MWASNetwork.txt") and an attribute file ("MWASAttribute.txt")
-of MWAS scores, which can be imported into cytoscape to visualize the network.
+exports a network file ("Correlation_NetworkFile.txt") and an attribute file
+("Correlation_AttributeFile.txt") of MWAS scores, which can be imported into
+cytoscape to visualize the network.
 }
 \examples{
 ## Load data
