@@ -543,7 +543,7 @@ MWAS_KEGG_shortestpaths = function(network_table, metabolites,
 
 ### MWAS_KEGG_pathways ####
 MWAS_KEGG_pathways = function(metabolites, MWAS_matrix = NULL,
-                              enrichment_test = TRUE, mt_method = "BH",
+                              enrichment_test = FALSE, mt_method = "bonferroni",
                               file_name = "KeggPaths") {
 
     ## Check if input data are correct

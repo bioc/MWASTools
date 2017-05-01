@@ -8,8 +8,8 @@ attribute file which can be imported into Cytoscape to visualize the results
 as a pathway-based metabolic network.
 }
 \usage{
-MWAS_KEGG_pathways(metabolites, MWAS_matrix = NULL, enrichment_test = TRUE,
-                   mt_method = "BH", file_name = "KeggPaths")
+MWAS_KEGG_pathways(metabolites, MWAS_matrix = NULL, enrichment_test = FALSE,
+                   mt_method = "bonferroni", file_name = "KeggPaths")
 }
 \arguments{
   \item{metabolites}{character vector containing the KEGG IDs of the metabolites

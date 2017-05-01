@@ -172,7 +172,7 @@ head(kegg_pathways[, c(2, 4)])
 <p style="font-size:110%"> This function also exported a network file that allows
 generating a pathway-based metabolic network in Cytoscape [@shanon2003], as shown
 below. In this network, human pathways are highlighted and the color of the edges
-indicate pathway class. <br><br> </p>
+indicates pathway class. <br><br> </p>
 
 ![](./network_figure/pathway_network.png)
 
