@@ -18,7 +18,7 @@ BH_correct = function(x, y, alpha_th) {
 
 ### STOCSY_NMR ##
 
-STOCSY_NMR = function(metabo_SE, ppm_query, alpha_th = 0.05,
+STOCSY_NMR = function(metabo_SE, ppm_query, cor_method = "pearson", alpha_th = 0.05,
                       xlab = "ppm", ylab = "covariance", size_lab = 12, size_axis = 12,
                       xlim = NULL, ylim = NULL, xbreaks = waiver(), xnames = waiver(),
                       ynames = waiver(), ybreaks = waiver()) {
@@ -54,9 +54,9 @@ STOCSY_NMR = function(metabo_SE, ppm_query, alpha_th = 0.05,
     cols_metabo = split(t(metabo_matrix), row(t(metabo_matrix)))
 
     cov_metabo = as.vector(cov(driver, metabo_matrix, method = "pearson"))
-    cor_metabo = as.vector(cor(driver, metabo_matrix, method = "pearson"))
+    cor_metabo = as.vector(cor(driver, metabo_matrix, method = cor_method))
 
-    pval_metabo = sapply(cols_metabo, get_pval, y = driver, method = "pearson")
+    pval_metabo = sapply(cols_metabo, get_pval, y = driver, method = cor_method)
     BH_pvalue = p.adjust(pval_metabo, method = "BH")
     RT = list()
     RT[["alpha_th"]] = alpha_th

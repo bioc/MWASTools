@@ -9,13 +9,16 @@ and the Pearson correlation coefficient (color) of all spectral variables with t
 of interest (driver signal).
 }
 \usage{
-STOCSY_NMR (metabo_SE, ppm_query, alpha_th = 0.05, xlab = "ppm", ylab = "covariance",
-            size_lab = 12, size_axis = 12, xlim = NULL, ylim = NULL, xbreaks = waiver(),
-            xnames = waiver(), ynames = waiver(), ybreaks = waiver())
+STOCSY_NMR (metabo_SE, ppm_query, cor_method = "pearson", alpha_th = 0.05,
+            xlab = "ppm", ylab = "covariance", size_lab = 12, size_axis = 12,
+            xlim = NULL, ylim = NULL, xbreaks = waiver(), xnames = waiver(),
+            ynames = waiver(), ybreaks = waiver())
 }
 \arguments{
   \item{metabo_SE}{SummarizedExperiment object. See "MWAS_SummarizedExperiment()".}
   \item{ppm_query}{numeric value (at least 2 decimals) corresponding to the driver ppm.}
+  \item{cor_method}{character vector specifying the correlation method("pearson"
+  or "spearman").}
   \item{alpha_th}{numeric value indicating the significance threshold. NMR variables
   with BH-adjusted p-value above this threshold will be neglected.}
   \item{xlab}{character vector specifying a title for the x-axis.}
