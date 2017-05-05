@@ -9,7 +9,7 @@ association. The metabolites are ordered based on hierarchical cluster analysis
 of the auto-correlation metabolic matrix.
 }
 \usage{
-MWAS_heatmap (metabo_SE, MWAS_list, alpha_th = 0.05, ncut = 3, ...)
+MWAS_heatmap (metabo_SE, MWAS_list, alpha_th = 0.05, display_all = TRUE, ncut = 3, ...)
 }
 \arguments{
   \item{metabo_SE}{SummarizedExperiment object. See "MWAS_SummarizedExperiment()".}
@@ -20,6 +20,9 @@ MWAS_heatmap (metabo_SE, MWAS_list, alpha_th = 0.05, ncut = 3, ...)
   \item{alpha_th}{numeric value indicating MWAS significance threshold. Metabolites
   with p-value (corrected for multiple-testing) above alpha_th will have a MWAS
   score of 0. }
+  \item{display_all}{logical constant indicating whether all metabolites from metabo_SE
+  will be shown in the heatmap, or only the ones significantly associated with at
+  least one phenotype.}
   \item{ncut}{numeric value indicating where the tree will be cut.}
   \item{...}{other arguments passed to the function "Heatmap()" from the
   ComplexHeatmap package.}

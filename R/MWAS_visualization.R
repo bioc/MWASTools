@@ -366,7 +366,8 @@ MWAS_scatterplotMS = function(rt, mz, MWAS_matrix, alpha_th = 0.05, xlab = "rt",
 }
 
 ### MWAS_heatmap ####
-MWAS_heatmap = function (metabo_SE, MWAS_list, alpha_th = 0.05, ncut = 3, ...) {
+MWAS_heatmap = function (metabo_SE, MWAS_list, alpha_th = 0.05, display_all = TRUE,
+                         ncut = 3, ...) {
 
     ## Check that input data are correct
     if(!is.list(MWAS_list)) {
@@ -390,6 +391,18 @@ MWAS_heatmap = function (metabo_SE, MWAS_list, alpha_th = 0.05, ncut = 3, ...) {
 
     ## Get correlation_matrix
     metabolic_data = t(assays(metabo_SE)$metabolic_data)
+
+    ## Check if there are any non significant results
+    if(display_all == FALSE) {
+        non_sig_index = which(rowSums(score_matrix) == 0)
+        if (length(non_sig_index) == nrow(score_matrix)) {
+            stop ("None of the metabolites meets the significance criteria")
+        }
+        if (length(non_sig_index) > 0) {
+            metabolic_data = metabolic_data[, -non_sig_index]
+            score_matrix = score_matrix[-non_sig_index, ]
+        }
+    }
 
     ## Clustering and generation of row dendrogram
     hr <<- hclust(as.dist(1-cor(metabolic_data, method="pearson")),
