@@ -5,8 +5,8 @@
 This function calculates STOCSY between an NMR signal of interest and all the NMR
 variables, representing a useful tool for NMR molecular identification and assignment.
 The results are represented in a pseudo-NMR spectrum displaying the covariance (height)
-and the Pearson correlation coefficient (color) of all spectral variables with the variable
-of interest (driver signal).
+and the Pearson/Spearman correlation coefficient (color) of all spectral variables 
+with the variable of interest (driver signal).
 }
 \usage{
 STOCSY_NMR (metabo_SE, ppm_query, cor_method = "pearson", alpha_th = 0.05,
@@ -42,7 +42,7 @@ between all spectral variables and the driver signal.
 \references{
 Cloarec O, et al.(2005). Statistical total correlation spectroscopy: An exploratory
 approach for latent biomarker identification from metabolic 1H NMR data sets. Analytical
-Chemistry, 77, 1282–1289.
+Chemistry, 77, 1282???1289.
 
 Nicholson JK, et al. (2005). Method for the identification of molecules and biomarkers
 using chemical, biochemical and biological data. US 20070043518 A1
