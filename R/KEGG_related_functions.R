@@ -207,7 +207,7 @@ MWAS_build_reaction_network = function(metabo_paths) {
 
         if (length(empty_paths) >= 1) {
             list_parsed_paths = list_parsed_paths[-c(empty_paths)]
-            paths_included[path_names[empty_paths]] = 0
+            #paths_included[path_names[empty_paths]] = 0
             path_names = path_names[-c(empty_paths)]
         }
         if (length(list_parsed_paths) == 0) {
