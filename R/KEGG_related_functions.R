@@ -131,10 +131,15 @@ sr_network_from_path = function(path, list_parsed_paths) {
 }
 
 ### new_sp_edge #### create individual substrate_product_reaction edges
-new_sp_edge = function(row_substrate, mid_value) {
+new_sp_edge = function(row_substrate, mid_value, last_value) {
     if (identical(as.character(mid_value),
                   as.character(unlist(row_substrate)[1:2]))) {
         message(" -Process: 50% completed")
+    }
+    if (identical(as.character(last_value),
+                  as.character(unlist(row_substrate)[1:2]))) {
+    message(" -Process: 100% completed")
+    message()
     }
     reaction = unlist(row_substrate)[2]
     substrate = unlist(row_substrate)[1]
@@ -185,6 +190,9 @@ MWAS_build_reaction_network = function(metabo_paths) {
     ### Get KGML files and transform them into reaction files####
     message("Reading paths from KGML files")
     list_parsed_paths = lapply(metabo_paths, get_metabonetR)
+    if (all(sapply(list_parsed_paths, is.null))) {
+        stop ("Impossible to build a network with these metabo_paths")
+    }
     names(list_parsed_paths) = metabo_paths
     path_names = metabo_paths
 
@@ -223,7 +231,8 @@ MWAS_build_reaction_network = function(metabo_paths) {
             ptm <- proc.time()
             mid_value = rows_substrate[[round(length(rows_substrate)/2,
                 0)]][1:2]
-            metabolic_table = lapply(rows_substrate, new_sp_edge, mid_value)
+            last_value = rows_substrate[[length(rows_substrate)]][1:2]
+            metabolic_table = lapply(rows_substrate, new_sp_edge, mid_value, last_value)
             metabolic_table = do.call(rbind, metabolic_table)
             proc.time() - ptm
             if (is.null(metabolic_table)) {

@@ -50,7 +50,6 @@ remove_isolatedV = function(metabolite, all_metabolites) {
 }
 
 ##### MWAS_network ###
-
 MWAS_network = function(metabo_SE, MWAS_matrix, alpha_th = 0.05,
     cor_th = 0.25, file_name = "Correlation", res_cor = 2) {
 

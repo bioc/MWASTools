@@ -13,12 +13,12 @@ MWAS_KEGG_shortestpaths(network_table, metabolites, MWAS_matrix = NULL,
                         file_name = "KeggSP")
 }
 \arguments{
-  \item{network_table}{two-column matrix where each row represents an edge
-  between two nodes. See function "MetaboSignal_matrix ( )".}
+  \item{network_table}{four-column matrix where each row represents an edge
+  between two nodes. See function "MMWAS_KEGG_network()".}
   \item{metabolites}{character vector containing the KEGG IDs of the metabolites
   of interest detected by MWAS. The order of the metabolite IDs in this vector must
   match the order in MWAS_matrix. Compound KEGG IDs can be obtained using the
-  function "MS_FindKEGG()" from the MetaboSignal package.}
+  function "MS_keggFinder()" from the MetaboSignal package.}
   \item{MWAS_matrix}{numeric matrix generated with the function "MWAS_stats()".
   It can also be a submatrix containing only the significant metabolites, generated
   with the function "MWAS_filter()". }

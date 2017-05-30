@@ -1,11 +1,11 @@
 Package: MWASTools
 Type: Package
 Title: MWASTools: an integrated pipeline to perform metabolome-wide association studies
-Version: 1.1.5
+Version: 1.1.6
 Date: 2016-06-27
 Author: Andrea Rodriguez-Martinez, Joram M. Posma, Rafael Ayala, Ana L. Neves, Maryam Anwar, Jeremy K. Nicholson, Marc-Emmanuel Dumas
 Maintainer: Andrea Rodriguez-Martinez <andrea.rodriguez-martinez13@imperial.ac.uk>, Rafael Ayala <r.ayala14@imperial.ac.uk>
-Description: MWAS provides a complete pipeline to perform metabolome-wide association studies. Key functionalities of the package include: quality control analysis of metabonomic data; MWAS using different association models (partial correlations; generalized linear models); model validation using non-parametric bootstrapping; visualization of MWAS results; NMR metabolite identification using STOCSY; and biological interpretation of MWAS results.
+Description: MWASTools provides a complete pipeline to perform metabolome-wide association studies. Key functionalities of the package include: quality control analysis of metabonomic data; MWAS using different association models (partial correlations; generalized linear models); model validation using non-parametric bootstrapping; visualization of MWAS results; NMR metabolite identification using STOCSY; and biological interpretation of MWAS results.
 License: CC BY-NC-ND 4.0
 Depends: R(>= 3.4)
 Suggests: RUnit, BiocGenerics, knitr, BiocStyle, rmarkdown
