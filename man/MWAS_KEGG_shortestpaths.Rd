@@ -14,7 +14,7 @@ MWAS_KEGG_shortestpaths(network_table, metabolites, MWAS_matrix = NULL,
 }
 \arguments{
   \item{network_table}{four-column matrix where each row represents an edge
-  between two nodes. See function "MMWAS_KEGG_network()".}
+  between two nodes. See function "MWAS_KEGG_network()".}
   \item{metabolites}{character vector containing the KEGG IDs of the metabolites
   of interest detected by MWAS. The order of the metabolite IDs in this vector must
   match the order in MWAS_matrix. Compound KEGG IDs can be obtained using the

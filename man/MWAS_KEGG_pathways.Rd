@@ -15,7 +15,7 @@ MWAS_KEGG_pathways(metabolites, MWAS_matrix = NULL, enrichment_test = FALSE,
   \item{metabolites}{character vector containing the KEGG IDs of the metabolites
   of interest detected by MWAS. The order of the metabolite IDs in this vector must
   match the order in MWAS_matrix. Compound KEGG IDs can be obtained using the
-  function "MS_FindKEGG()" from the MetaboSignal package.}
+  function "MS_keggFinder()" from the MetaboSignal package.}
   \item{MWAS_matrix}{numeric matrix generated with the function "MWAS_stats()".
   It can also be a submatrix containing only the significant metabolites, generated
   with the function "MWAS_filter()". }
