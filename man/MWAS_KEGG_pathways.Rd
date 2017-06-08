@@ -8,8 +8,7 @@ attribute file which can be imported into Cytoscape to visualize the results
 as a pathway-based metabolic network.
 }
 \usage{
-MWAS_KEGG_pathways(metabolites, MWAS_matrix = NULL, enrichment_test = FALSE,
-                   mt_method = "bonferroni", file_name = "KeggPaths")
+MWAS_KEGG_pathways(metabolites, MWAS_matrix = NULL, file_name = "KeggPaths")
 }
 \arguments{
   \item{metabolites}{character vector containing the KEGG IDs of the metabolites
@@ -19,12 +18,6 @@ MWAS_KEGG_pathways(metabolites, MWAS_matrix = NULL, enrichment_test = FALSE,
   \item{MWAS_matrix}{numeric matrix generated with the function "MWAS_stats()".
   It can also be a submatrix containing only the significant metabolites, generated
   with the function "MWAS_filter()". }
-  \item{enrichment_test}{logical constant indicating whether pathway enrichment
-  analysis will be performed.}
-  \item{mt_method}{character string indicating the multiple-testing correction
-  method used to correct the p-values from the enrichment analysis tests. To check
-  all possible methods see "p.adjust()". This argument will be ignored if
-  enrichment_test = FALSE}
   \item{file_name}{character vector that allows customizing the name of the
   exported files.}
 }
@@ -53,11 +46,6 @@ of association with the phenotype under study (i.e. log10(pvalue) adjusted for
 the sign of the association). If pathway enrichment analysis is performed, the
 function also exports a file ("KeggPaths_EnrichmentAnalysis.txt") showing the
 results of this analysis.
-}
-\details{
-Pathway enrichment analysis of a given dataset is peformed by using all metabolites
-reported in KEGG pathways as reference. The p-values are calculated using one-sided
-Fisher's test.
 }
 \examples{
 \donttest{## Test for association between diabetes and target_metabolites

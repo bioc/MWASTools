@@ -48,22 +48,20 @@ assoc_test = function(metabolite, disease, CF = NULL, method,
     }
 }
 
-### MT_correction ####
+### MT_correction #### This has been updated in 1.1.7
 MT_correction = function(pvalues, mt_method = mt_method) {
     if (mt_method == "qvalues") {
-        bh_pvalues = p.adjust(pvalues, method = "BH")
-        Q = try(qvalue(pvalues), silent = TRUE)
-        if (grepl("Error", Q[1]) == TRUE) {
-            stop("Could not calculate q-values. Chose another correction method")
-        }
+        #bh_pvalues = p.adjust(pvalues, method = "BH")
         hist(pvalues, prob = TRUE, col = "gray", xlab = "p-values",
             main = "p-values distribution")
-        null_FP = try(head(Q, 2)$pi0, silent = TRUE)
-        adjusted_pvalues = bh_pvalues * null_FP
-        if (grepl("Error", adjusted_pvalues[1]) == TRUE) {
+        Q = try(qvalue(pvalues), silent = TRUE)
+        #null_FP = try(head(Q, 2)$pi0, silent = TRUE)
+        #adjusted_pvalues = bh_pvalues * null_FP
+        if (grepl("Error", Q[1]) == TRUE) {
             stop("Could not calculate q-values. Chose another correction method")
         } else {
-            adjusted_pvalues = bh_pvalues * null_FP
+            adjusted_pvalues = Q$qvalues
+            #adjusted_pvalues = bh_values*null_FP
         }
     } else {
         adjusted_pvalues = p.adjust(pvalues, method = mt_method)

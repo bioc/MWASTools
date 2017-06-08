@@ -407,23 +407,6 @@ pathway_cpd_table = function(compound, linked_table) {
     return(res)
 }
 
-### path_enrichment_test #### test for enrichment
-path_enrichment_test = function(path, mapped_pathsM, cpd_pathM) {
-    my_success = length(grep(path, mapped_pathsM[, "pathway_KEGG_ID"]))
-    my_failure = length(unique(mapped_pathsM[, 1])) - my_success
-    external_success = length(grep(path, cpd_pathM[, 2]))
-    external_failure = nrow(cpd_pathM) - external_success
-    #external_freq = length(grep(path, cpd_pathM[, 2]))/nrow(cpd_pathM)
-    contingence_table = matrix(c(my_success, my_failure,
-                                 external_success, external_failure),
-                               ncol = 2)
-    fisher_pval = fisher.test(contingence_table, alternative = "greater")$p.val
-    path_name = mapped_pathsM[(mapped_pathsM[, 3] == path), 4][1]
-    ans = c(path, path_name, fisher_pval)
-    return(ans)
-}
-
-
 ## EXTERNAL FUNCTIONS ##
 
 ### MWAS_KEGG_network ####
@@ -551,9 +534,7 @@ MWAS_KEGG_shortestpaths = function(network_table, metabolites,
 }
 
 ### MWAS_KEGG_pathways ####
-MWAS_KEGG_pathways = function(metabolites, MWAS_matrix = NULL,
-                              enrichment_test = FALSE, mt_method = "bonferroni",
-                              file_name = "KeggPaths") {
+MWAS_KEGG_pathways = function(metabolites, MWAS_matrix = NULL, file_name = "KeggPaths") {
 
     ## Check if input data are correct
     if (!is.vector(metabolites)) {
@@ -635,38 +616,7 @@ MWAS_KEGG_pathways = function(metabolites, MWAS_matrix = NULL,
         write.table(cytoscape_score_net, file_nameS, row.names = FALSE,
             sep = "\t", quote = FALSE, col.names = TRUE)
     }
-
-    ## Enrichment test
-    if(enrichment_test == FALSE) {
         return(mapped_pathsM)
-    }
 
-    ## Get compounds
-    message()
-    message("Running enrichment analysis")
-    file = "http://rest.kegg.jp/link/pathway/cpd"
-    response = getURL(file)
-    linked_table = unique(convertTable(response))
-    all_compounds = unique(linked_table[, 1])
-    all_compounds = gsub("path:", "", all_compounds)
-
-    ## Link compounds to paths
-    cpd_pathM = unique(do.call(rbind, lapply(all_compounds,
-                                             pathway_cpd_table, linked_table)))
-
-    ## Do Fisher test
-    paths_to_test = unique(mapped_pathsM[, "pathway_KEGG_ID"])
-    paths_tested = do.call(rbind, lapply(paths_to_test, path_enrichment_test,
-                                         mapped_pathsM, cpd_pathM))
-    adjusted_pval = p.adjust(paths_tested[, 3], method = mt_method)
-    paths_tested = cbind(paths_tested, adjusted_pval)
-    colnames(paths_tested) = c("pathway_KEGG_ID", "pathway_name", "raw_pval",
-                               "adjusted_pval")
-    cytoscape_enrich_net = as.data.frame(paths_tested, rownames = NULL)
-    file_nameE = paste(file_name, "EnrichmentAnalysis.txt", sep = "_")
-    write.table(cytoscape_enrich_net, file_nameE, row.names = FALSE,
-                sep = "\t", quote = FALSE, col.names = TRUE)
-
-    return(mapped_pathsM)
 }
 
