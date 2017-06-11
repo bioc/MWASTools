@@ -43,9 +43,7 @@ attribute file ("KeggPaths_AttributeFile.txt") that can be imported into
 Cytoscape to visualize the results as a network. The attribute file allows
 customizing the metabolites of interest based on a score reflecting the degree
 of association with the phenotype under study (i.e. log10(pvalue) adjusted for
-the sign of the association). If pathway enrichment analysis is performed, the
-function also exports a file ("KeggPaths_EnrichmentAnalysis.txt") showing the
-results of this analysis.
+the sign of the association).
 }
 \examples{
 \donttest{## Test for association between diabetes and target_metabolites
