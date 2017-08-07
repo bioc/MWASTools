@@ -4,6 +4,8 @@
 model_bootstrap <- function(all_var, indices, assoc_method) {
 
     all_var = all_var[indices, ]
+    #print(length(indices))
+    #print(length(unique(indices)))
     rownames(all_var) = 1:nrow(all_var)
 
     if (ncol(all_var) > 2) {

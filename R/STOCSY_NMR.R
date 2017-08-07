@@ -8,7 +8,7 @@ get_pval = function(x, y, method = method) {
 
 ### BH_correct ##
 BH_correct = function(x, y, alpha_th) {
-    if (y > alpha_th) {
+    if (y >= alpha_th) {
         x = 0
     }
     return(x)

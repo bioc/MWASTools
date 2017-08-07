@@ -28,6 +28,10 @@ QC_CV = function(metabo_SE, CV_th = 0.3, plot_hist = TRUE, hist_bw = 0.005,
     QCmetabo_matrix = assays(metabo_SE[, metabo_SE$sample_type == 1])$metabolic_data
     metabo_ids = rownames(QCmetabo_matrix)
 
+    ## Report number of variables
+    to_print = paste(ncol(QCmetabo_matrix), "QC samples were detected", sep = " ")
+    message(to_print)
+
     cols_metabo = split(QCmetabo_matrix, row(QCmetabo_matrix))
     CV_metabo = sapply(cols_metabo, CV_calculation)
     CV_metabo = abs(CV_metabo)  # absolute value of CV
@@ -157,48 +161,48 @@ QC_CV_specNMR = function(metabo_SE, ref_sample, CV_th = 0.3,
 
 ## QC_CV_scatterplot ##
 
-QC_CV_scatterplot = function(rt, mz, CV_metabo, CV_th = 0.30, xlab = "rt", 
-                             ylab = "mz", pch = 20, marker_size = 1, xlim = NULL, 
+QC_CV_scatterplot = function(rt, mz, CV_metabo, CV_th = 0.30, xlab = "rt",
+                             ylab = "mz", pch = 20, marker_size = 1, xlim = NULL,
                              ylim = NULL, size_axis = 10, size_lab = 10) {
-    
+
     ## Check if input variables are correct
     if (is.vector(rt) == FALSE | is.numeric(rt) == FALSE) {
         stop ("rt must be a numeric vector")
     }
-    
+
     if (is.vector(mz) == FALSE | is.numeric(mz) == FALSE) {
         stop ("mz must be a numeric vector")
     }
-    
+
     if (is.vector(CV_metabo) == FALSE | is.numeric(CV_metabo) == FALSE) {
         stop ("CV_metabo must be a numeric vector")
     }
-    
+
     if (length(CV_metabo) != length(rt) | length(rt) != length(mz)) {
         stop("lengths of rt, mz, and CV_metabo must be consistent")
     }
-    
+
     CV_metabo = abs(CV_metabo)
     CV_metabo[CV_metabo >= CV_th] = CV_th
-    
+
     data_CV = data.frame(rt = rt, mz = mz, abs.CV = CV_metabo)
-    
+
     color_scale = c("green3", "dodgerblue2", "plum2", "purple", "purple4", "red1")
     col_values = c(0, 0.45, 0.55, 0.9, 0.9996666, 1)
-    
-    figure = ggplot (data_CV, aes(rt, mz, color = abs.CV)) + 
-        geom_point(shape = pch, size = marker_size) + 
-        scale_colour_gradientn(colours = color_scale, values = col_values, 
-                               space = "Lab", limits = c(0, CV_th), 
+
+    figure = ggplot (data_CV, aes(rt, mz, color = abs.CV)) +
+        geom_point(shape = pch, size = marker_size) +
+        scale_colour_gradientn(colours = color_scale, values = col_values,
+                               space = "Lab", limits = c(0, CV_th),
                                breaks = c(0, CV_th/2, CV_th)) +
-        theme_bw() + 
+        theme_bw() +
         labs(x = xlab, y = ylab) +
         scale_x_continuous(limits = xlim) +
         scale_y_continuous(limits = ylim) +
         theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
               axis.text = element_text(size = size_axis),
               axis.title = element_text(size = size_lab, vjust = 0))
-    
+
     return(figure)
 }
 

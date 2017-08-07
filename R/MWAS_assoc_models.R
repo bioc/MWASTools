@@ -8,8 +8,9 @@ assoc_test = function(metabolite, disease, CF = NULL, method,
 
     if (method %in% cor_methods) {
         if (is.null(CF)) {
-            model = suppressWarnings(cor.test(disease, metabolite,
-                method = method))
+            #model = suppressWarnings(cor.test(disease, metabolite,
+                #method = method)) # This was updated
+            model = cor.test(disease, metabolite, method = method)
             p_value = model$p.value
             r_value = model$estimate
         } else {
@@ -133,6 +134,11 @@ MWAS_stats = function(metabo_SE, disease_id, confounder_ids = NULL,
         stop("The number of samples is too small after removing NA values")
     }
 
+    ## Print dimensions
+    to_print = paste(nrow(na.omit(all_var)), "samples will be included in the",
+                     "analysis", sep = " ")
+    message(to_print)
+
     ## Get NA index
     na_index = unique(as.numeric((which(is.na(all_var), arr.ind = TRUE)[,
         1])))
@@ -216,6 +222,10 @@ MWAS_filter = function(MWAS_matrix, type = "pvalue", alpha_th = 0.05,
     if (ncol(MWAS_matrix) < 3) {
         stop("MWAS_matrix must have at least 3 columns")
     }
+    ## Check if there are NA values
+    if (sum(is.na(as.vector(MWAS_matrix))) > 0) { # This has been updated
+        stop("NA values in MWAS_matrix are not allowed")
+    }
     possible_types = c("pvalue", "CV", "all")
     if (type %in% possible_types == FALSE) {
         stop("Invalid type. Possible types are: pvalue, CV or all")
@@ -259,7 +269,6 @@ MWAS_filter = function(MWAS_matrix, type = "pvalue", alpha_th = 0.05,
             if (sort == TRUE & is.matrix(MWAS_matrix) == TRUE) {
                 MWAS_matrix = MWAS_matrix[order(MWAS_matrix[, 3], decreasing = FALSE), ]
             }
-
             return(MWAS_matrix)
         }
         if (length(index_pval) == nrow(MWAS_matrix)) {

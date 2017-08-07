@@ -5,7 +5,7 @@
 This function calculates STOCSY between an NMR signal of interest and all the NMR
 variables, representing a useful tool for NMR molecular identification and assignment.
 The results are represented in a pseudo-NMR spectrum displaying the covariance (height)
-and the Pearson/Spearman correlation coefficient (color) of all spectral variables 
+and the Pearson/Spearman correlation coefficient (color) of all spectral variables
 with the variable of interest (driver signal).
 }
 \usage{
@@ -20,7 +20,7 @@ STOCSY_NMR (metabo_SE, ppm_query, cor_method = "pearson", alpha_th = 0.05,
   \item{cor_method}{character vector specifying the correlation method("pearson"
   or "spearman").}
   \item{alpha_th}{numeric value indicating the significance threshold. NMR variables
-  with BH-adjusted p-value above this threshold will be neglected.}
+  with BH-adjusted p-value equal or above this threshold will be neglected.}
   \item{xlab}{character vector specifying a title for the x-axis.}
   \item{ylab}{character vector specifying a title for the y-axis. }
   \item{size_lab}{numeric value indicating the font size of x- and y- axis titles.}

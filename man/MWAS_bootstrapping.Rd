@@ -5,6 +5,8 @@
 This function generates bootstrap replicates (non-parametric resampling) of a model
 testing for association between a given metabolite and a disease phenotype,
 and calculates the confidence interval of model coefficients.
+Confidence intervals are calculated using the adjusted bootstrap percentile 
+(BCa) method.
 }
 \usage{
 MWAS_bootstrapping (metabo_SE, metabolite_id, disease_id, confounder_ids = NULL,
