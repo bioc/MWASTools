@@ -96,7 +96,7 @@ with the function "MWAS_SummarizedExperiment()", and containing the following in
 
 <p style="font-size:110%"> To ensure the stability and reproducibility of the analytical run, we performed QC analysis based on principal component analysis (PCA) and coefficient of variation (CV) (sd/mean) across the QC samples [@dumas2006]. </p>
 
-```{r tidy = TRUE, results='asis', fig.width = 14, fig.height = 6}
+```{r tidy = TRUE, results='asis', fig.width = 12, fig.height = 6, fig.pos = "center"}
 # PCA model
 PCA_model = QC_PCA (metabo_SE, scale = FALSE, center = TRUE)
 
@@ -112,7 +112,7 @@ reproducibility of the analytical run. </p>
 <p style="font-size:110%"> Following QC analysis *via* PCA, we calculated the CVs of the NMR signals across the QC samples. Notice that CV = 0.30 and CV = 0.15 are the thresholds established by the FDA (U.S. Food and Drug Administration) for biomarker discovery and quantification, respectively. </p>
 
 
-```{r tidy = TRUE, eval = TRUE, fig.width = 14, fig.height = 4}
+```{r tidy = TRUE, eval = TRUE, fig.width = 12, fig.height = 6}
 # CV calculation 
 metabo_CV = QC_CV (metabo_SE, plot_hist = FALSE)
 
@@ -134,7 +134,7 @@ metabo_SE = CV_filter(metabo_SE, metabo_CV, CV_th = 0.30)
 
 <p style="font-size:110%"> In order to identify metabolites associated with T2D, we run logistic regression models between T2D and each NMR variable, adjusted for age, gender, and BMI. To correct the p-values for multiple-testing we used Benjamini-Hochberg (BH) correction. </p>
 
-```{r tidy = TRUE, tidy.opts=list(indent = 4, width.cutoff = 80)}
+```{r tidy = TRUE, tidy.opts=list(indent = 4, width.cutoff = 50)}
 # Run MWAS
 MWAS_T2D = MWAS_stats(metabo_SE, disease_id = "T2D", confounder_ids = c("Age","Gender", "BMI"), 
                       assoc_method = "logistic", mt_method = "BH")
@@ -143,7 +143,7 @@ MWAS_T2D = MWAS_stats(metabo_SE, disease_id = "T2D", confounder_ids = c("Age","G
 <p style="font-size:110%"> *MWAS_T2D* is 3-column matrix, with the metabolic features (ppm values) in the rows. The columns contain the following information: estimates (i.e. beta coefficients), raw p-values and BH-corrected p-values (pFDR). These results were visualized using the function "MWAS_skylineNMR( )". </p>
 
 
-```{r tidy = TRUE, fig.width = 14, fig.height = 6}
+```{r tidy = TRUE, fig.width = 12, fig.height = 8}
 # Visualize MWAS results 
 skyline = MWAS_skylineNMR(metabo_SE, MWAS_T2D, ref_sample = "QC1")
 ```
@@ -152,7 +152,7 @@ skyline = MWAS_skylineNMR(metabo_SE, MWAS_T2D, ref_sample = "QC1")
 ## NMR metabolite assignment using STOCSY
 <p style="font-size:110%"> We then used STOCSY to assign the unknown NMR signals associated with T2D. An illustrative example using δ 1.04 as driver signal is shown below. </p>
 
-```{r tidy = TRUE, fig.width = 14, fig.height = 4}
+```{r tidy = TRUE, fig.width = 12, fig.height = 6}
 stocsy = STOCSY_NMR(metabo_SE, ppm_query = 1.04)
 ```
 

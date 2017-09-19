@@ -175,7 +175,7 @@ MWAS_skylineNMR = function(metabo_SE, MWAS_matrix, ref_sample, alpha_th = 0.05,
                 theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                       axis.text = element_text(size = size_axis),
                       axis.title = element_text(size = size_lab, vjust = 0)) +
-                geom_hline(yintercept = 0, col = scale_color[1]) +
+                #geom_hline(yintercept = 0, col = scale_color[1]) +
                       {
                         if (1 %in% nb) geom_hline(yintercept = +log10(alpha_th),
                                                   col = scale_color[2],
