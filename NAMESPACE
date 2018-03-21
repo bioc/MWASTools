@@ -1,4 +1,7 @@
 export('MWAS_stats')
+export('JBA_binning')
+export('JBA_corDistribution')
+export('JBA_plotBins')
 export('MWAS_KEGG_network')
 export('MWAS_heatmap')
 export('MWAS_KEGG_pathways')

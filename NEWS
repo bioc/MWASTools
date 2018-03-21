@@ -1,4 +1,4 @@
 CHANGES IN VERSION 1.1.1
 -----------------------
-  o MWASTools includes new functions: "MWAS_heatmap()", "MWAS_KEGG_pathways()", 
-  "MWAS_KEGG_network()", and "MWAS_KEGG_shortestpaths()".
+  o MWASTools includes new functions: “MWAS_heatmap()”, “MWAS_KEGG_pathways()”, 
+  “MWAS_KEGG_network()”, and “MWAS_KEGG_shortestpaths()”.
