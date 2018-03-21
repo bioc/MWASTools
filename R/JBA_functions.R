@@ -371,7 +371,7 @@ JBA_corDistribution = function(NMR_data, st = 4, cm = "pearson",
 
 ## JBA_binning ##
 JBA_binning = function(NMR_data, st = 4, ct = 0.85, int = "sum",
-                       cm = "pearson", ef = 4, merge = TRUE, mt = 0.9) {
+                       cm = "pearson", ef = 2, merge = TRUE, mt = 0.9) {
 
     # STEP 0: Predefined parameters & check data
     search_max = TRUE # Find local maxima (instead of local minima)
