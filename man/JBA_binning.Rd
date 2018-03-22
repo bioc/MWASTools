@@ -21,8 +21,9 @@ JBA_binning (NMR_data, st = 4, ct = 0.85, int = "sum", cm = "pearson",
   \item{int}{character vector indicating the method used to calculate the bin intensity.
   	Possible values are: "sum", "mean", "max", "median". }
   \item{cm}{character vector specifying the correlation method ("pearson" or "spearman").}
-  \item{ef}{numeric value indicating the maximum number of upfield and downfield variables
-  	that can be used to expand the seed (see details).}
+  \item{ef}{numeric value establishing the maximum number of upfield or downfield
+  variables that can be used to expand the seed. The maximum number of variables that
+  can be added on each side of a given seed (size = st) is st*ef.}
   \item{merge}{character constant indicating whether highly correlated (correlation > mt)
   	adjacent bins will be merged (i.e. integrated as a single bin).}
   \item{mt}{numeric value indicating the correlation threshold used to merge adjacent bins.
