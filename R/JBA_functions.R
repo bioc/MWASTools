@@ -248,15 +248,17 @@ JBA_mergeClusters = function(NMR_JBA, NMR_data, cm = "pearson", mt = 0.90,
     cor_pairs_final = cor_pairs_cleaned
 
     if (length(dup_idx) > 0) { ## More than 2 consecutive clusters will be merged
-        for (idx in dup_idx) {
-            dup_clusters = grep(cluster_ids[idx], rownames(cor_pairs_final))
-            clust_range = unlist(strsplit(cor_pairs_final[dup_clusters, 2], "_"))
-            clust_lim = paste(min(clust_range), max(clust_range), sep = "_")
-            rownames(cor_pairs_final)[dup_clusters[1]] =
-                paste(rownames(cor_pairs_final)[dup_clusters], collapse = "_")
-            cor_pairs_final[dup_clusters[1], 2] = clust_lim ## updates the merging limits
-            cor_pairs_final = cor_pairs_final[-dup_clusters[-1], ]
+      for (idx in dup_idx) {
+        dup_clusters = grep(cluster_ids[idx], rownames(cor_pairs_final), fixed = TRUE)
+        if (length(dup_clusters) > 0) { ## This has been updated # Jun 2018
+          clust_range = unlist(strsplit(cor_pairs_final[dup_clusters, 2], "_"))
+          clust_lim = paste(min(clust_range), max(clust_range), sep = "_")
+          rownames(cor_pairs_final)[dup_clusters[1]] =
+            paste(rownames(cor_pairs_final)[dup_clusters], collapse = "_")
+          cor_pairs_final[dup_clusters[1], 2] = clust_lim ## updates the merging limits
+          cor_pairs_final = cor_pairs_final[-dup_clusters[-1], ]
         }
+      }
     }
 
     # STEP 2: Merge selected clusters
@@ -317,12 +319,16 @@ JBA_mergeClusters = function(NMR_JBA, NMR_data, cm = "pearson", mt = 0.90,
 
 ## JBA_corDistribution ##
 JBA_corDistribution = function(NMR_data, st = 4, cm = "pearson",
-                               metabo_range = c(3.50, 3.96), noise_range = c(0.4, 0.67)) {
+                               metabo_range = c(3.50, 3.96),
+                               noise_range = c(9.72, 9.99),
+                               color_scale = c("lightcoral", "honeydew3")) {
+    ## Check st value
+    st = round(st, 0)
+    if (st < 2) {
+        stop ("st value should be at least 2")
+    }
 
-    ## Predifine parameters
-    color_scale = c("gray", "lightcoral")
-    bw = 0.01
-
+    ## Get st clusters
     mean_clusters = matrix(ncol = 4, nrow = (ncol(NMR_data) - st))
     ppm = as.numeric(colnames(NMR_data))
 
@@ -334,39 +340,50 @@ JBA_corDistribution = function(NMR_data, st = 4, cm = "pearson",
         mean_clusters[i, ] = c(mean_ppm, mean_cor, all_ppm, paste(range, collapse = "_"))
     }
 
+    ## Get metabo and noise ranges
     metabo_range = sort(metabo_range, decreasing = FALSE)
     noise_range = sort(noise_range, decreasing = FALSE)
 
-    metabo_ppm = which(ppm >= metabo_range[1] & ppm <= metabo_range[2])
-    noise_ppm = which(ppm >= noise_range[1] & ppm <= noise_range[2])
+    ppm_clusters = as.numeric(mean_clusters[, 1])
+
+    if (noise_range[2] > tail(ppm_clusters, 1)| noise_range[1] < ppm_clusters[1]) {
+        stop("noise_range not included in ppm scale")
+    }
+
+    metabo_ppm = which(ppm_clusters >= metabo_range[1] & ppm_clusters <= metabo_range[2])
+    noise_ppm = which(ppm_clusters >= noise_range[1] & ppm_clusters <= noise_range[2])
 
     ## Compare distributions of r coefficients ##
-    metabo = data.frame(as.numeric(mean_clusters[metabo_ppm, 2]))
-    colnames(metabo) = "r.coeff"
-    noise = data.frame(as.numeric(mean_clusters[noise_ppm, 2]))
-    colnames(noise) = "r.coeff"
+    metabo = as.numeric(mean_clusters[metabo_ppm, 2])
+    metabo_fun = ecdf(metabo)
+    noise = as.numeric(mean_clusters[noise_ppm, 2])
+    noise_fun = ecdf(noise)
 
-    metabo$class = "metabo"
-    noise$class = "noise"
-    vegLengths2 = rbind(noise, metabo)
+    metabo_cum = data.frame(r.coeff = metabo, cum = as.numeric(metabo_fun(metabo)))
+    noise_cum = data.frame(r.coeff = noise, cum = as.numeric(noise_fun(noise)))
+    noise_sorted = noise_cum[order(noise_cum[, "r.coeff"]), ]
+    ct_val = noise_sorted[which(noise_sorted[, "cum"] == 1)[1], ]
 
-    plot = ggplot(vegLengths2, aes(r.coeff, fill = class, color = class)) +
-        geom_density(alpha = 0.5, size = 0.8, bw = bw) +
-        scale_fill_manual(values = c(color_scale[2], color_scale[1])) +
-        scale_color_manual(values=c(color_scale[2], color_scale[1]))+
-        labs(x = "r coefficient", y = "Density") + theme_bw() +
+    ylab = paste("Cumulative proportion of clusters (st = ", st, ")", sep = "")
+    ylab = "Cumulative proportion of clusters"
+
+    plot = ggplot(metabo_cum, aes(r.coeff, cum)) +
+        geom_area(fill  = color_scale[1], alpha = 0.5, color = color_scale[1], size = 0.7) +
+        geom_area(data = noise_cum, aes(r.coeff, cum), fill = color_scale[2],
+                  color = color_scale[2], alpha = 0.6, size = 0.7) +
+        labs(x = "r coefficient", y = ylab) + theme_bw() +
         theme(
-            panel.grid.major = element_blank(),
-            panel.grid.minor = element_blank(),
-            axis.text = element_text(size = 10),
-            axis.title = element_text(size = 10, vjust = 0),
-            axis.text.x = element_text(size = 10),
-            axis.text.y = element_text(angle = 0, size = 10)) +
-        scale_y_continuous(breaks = c(0, 5, 10, 15, 20, 25)) +
-        scale_x_continuous()
+              panel.grid.major = element_blank(),
+              panel.grid.minor = element_blank(),
+              axis.text = element_text(size = 10),
+              axis.title = element_text(size = 10, vjust = 0),
+              axis.text.x = element_text(size = 10),
+              axis.text.y = element_text(angle = 0, size = 10))
+
+    ## Suggest st value
+    print(paste("Suggested ct value:", round(ct_val[, 1], 5)))
 
     return(plot)
-
 }
 
 ## JBA_binning ##
