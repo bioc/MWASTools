@@ -535,6 +535,15 @@ JBA_binning = function(NMR_data, st = 4, ct = 0.85, int = "sum",
 
     # STEP 4: Generate output
     res = vector(mode = "list", length = 5)
+    mean_clusters[, "mean_ppm"] = format(round(as.numeric(mean_clusters[, "mean_ppm"]), 7),
+                           nsmall = 7)
+    JBA_clusters[, "mean_ppm"] = format(round(as.numeric(JBA_clusters[, "mean_ppm"]), 7),
+                                        nsmall = 7)
+    JBA_clusters_exp[, "mean_ppm"] = format(round(as.numeric(JBA_clusters_exp[, "mean_ppm"]), 7),
+                                            nsmall = 7)
+    colnames(JBA_data) = format(round(as.numeric(colnames(JBA_data)), 7),
+                                nsmall = 7)
+
     res[[1]] = mean_clusters ## all clusters formed
     res[[2]] = JBA_clusters ## best clusters of each peak
     res[[3]] = JBA_clusters_exp ## clusters expanded
