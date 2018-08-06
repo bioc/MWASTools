@@ -556,8 +556,8 @@ JBA_binning = function(NMR_data, st = 4, ct = 0.85, int = "sum",
 
     if (merge == FALSE) {
         final_res = res[-4]
-        names(final_res) = c("all_clusters", "JBA_seeds", "JBA_clusters_expanded",
-                             "JBA_data")
+        names(final_res) = c("all_clusters", "JBA_seeds", "JBA_bins_expanded",
+                             "JBA_data") #Updated in 08/18
         return(final_res)
     }
     # Merge adjacent clusters with intercluster correlation > mt
@@ -566,8 +566,8 @@ JBA_binning = function(NMR_data, st = 4, ct = 0.85, int = "sum",
 
     if (is.null(merged_data)) { ## Did not find clusters to be merged
         final_res = res[-4]
-        names(final_res) = c("all_clusters", "JBA_seeds", "JBA_clusters_expanded",
-                             "JBA_data")
+        names(final_res) = c("all_clusters", "JBA_seeds", "JBA_bins_expanded",
+                             "JBA_data") #Updated in 08/18
         return(final_res)
     }
 
