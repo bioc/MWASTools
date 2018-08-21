@@ -284,6 +284,8 @@ JBA_mergeClusters = function(NMR_JBA, NMR_data, cm = "pearson", mt = 0.90,
             merged_clusters[, y] = apply(NMR_data[, lim_idx[1]:lim_idx[2]], 1, max)
         } else if (int == "median") {
             merged_clusters[, y] = apply(NMR_data[, lim_idx[1]:lim_idx[2]], 1, median)
+        } else if (int == "mean") {
+            merged_clusters[, y] = apply(NMR_data[, lim_idx[1]:lim_idx[2]], 1, mean)
         } else {
             merged_clusters[, y]  = apply(NMR_data[, lim_idx[1]:lim_idx[2]], 1, sum)
         }
@@ -526,6 +528,8 @@ JBA_binning = function(NMR_data, st = 4, ct = 0.85, int = "sum",
             JBA_data[, i] = apply(NMR_data[, ppm_limits], 1, max)
         } else if (int == "median") {
             JBA_data[, i] = apply(NMR_data[, ppm_limits], 1, median)
+        } else if (int == "mean") {
+            JBA_data[, i] = apply(NMR_data[, ppm_limits], 1, mean)
         } else {
             JBA_data[, i] = rowSums(NMR_data[, ppm_limits])
         }
