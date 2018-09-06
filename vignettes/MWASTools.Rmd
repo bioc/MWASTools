@@ -45,7 +45,7 @@ MWAS pipeline with the following key functionalities: quality control (QC) analy
 # Installation instructions
 
 <p style="font-size:110%"> Assuming that R (>=3.3) and Bioconductor have been correctly 
-installed, MWASTools can be installed with Bioconductor installation script biocLite: <br><p>
+installed, MWASTools can be installed with: <br><p>
 
 ```{r tidy = TRUE, eval = FALSE, tidy.opts=list(indent = 4, width.cutoff = 90)}
 if (!requireNamespace("BiocManager", quietly=TRUE))
